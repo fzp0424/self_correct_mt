@@ -9,13 +9,13 @@
 
 ## **🚀 Quick Links**
 
-- **[About TER](https://www.notion.so/Self-Correct-Machine-Translation-11f9e63afc4d4b60a95b63fb09e2dcf7?pvs=21)**
-- **[Code Structure](https://www.notion.so/Self-Correct-Machine-Translation-11f9e63afc4d4b60a95b63fb09e2dcf7?pvs=21)**
-- **[Requirements](https://www.notion.so/Self-Correct-Machine-Translation-11f9e63afc4d4b60a95b63fb09e2dcf7?pvs=21)**
-- **[Usage](https://www.notion.so/Self-Correct-Machine-Translation-11f9e63afc4d4b60a95b63fb09e2dcf7?pvs=21)**
-- **[Citation](https://www.notion.so/Self-Correct-Machine-Translation-11f9e63afc4d4b60a95b63fb09e2dcf7?pvs=21)**
+- **[About TER](#about)**
+- **[Code Structure](#code)**
+- **[Requirements](#req)**
+- **[Usage](#us)**
+- **[Citation](#c)**
 
-## **🤖** About TER
+## **🤖** About TER<a name="about"></a>
 
 The **TER** (**Translate**, **Estimate**, and **Refine**) framework is designed as a self-correcting translation approach that leverages Large Language Models (LLMs) to enhance translation quality. It comprises three integral modules:
 
@@ -25,7 +25,7 @@ The **TER** (**Translate**, **Estimate**, and **Refine**) framework is designed 
 
 <img src="./paper/framework.png" alt="framework.png" style="zoom:25%;" />
 
-## **📚** Code Structure
+## **📚** Code Structure<a name="code"></a>
 
 - `.env`: environment file (set API keys first!!)
 - `prompts/`: folder that contains all prompt files
@@ -36,7 +36,7 @@ The **TER** (**Translate**, **Estimate**, and **Refine**) framework is designed 
 - `demo.py`: an easy-realized TER demo
 - `language_pair.json`: language pairs supported in our paper
 
-## **📃** Requirements
+## **📃** Requirements<a name="req"></a>
 
 ```
 openai==1.6.1
@@ -45,7 +45,7 @@ langchain==0.0.352
 python-dotenv==1.0.0
 ```
 
-## **💁** Usage
+## **💁** Usage<a name="us"></a>
 
 ### a) File in, File out
 
@@ -109,7 +109,7 @@ print(f"Need correction: {nc}")
 print(f"MQM Info: {mqm_info}")
 ```
 
-## Citation
+## Citation<a name="cit"></a>
 
 ```latex
 @misc{feng2024improving,
