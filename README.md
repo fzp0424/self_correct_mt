@@ -1,6 +1,6 @@
 # Self-Correct Machine Translation
 
-![f1(1).png](Self-Correct%20Machine%20Translation%2011f9e63afc4d4b60a95b63fb09e2dcf7/f1(1).png)
+<img src="./paper/sign.png" style="zoom:25%;" />
 
 ## **🔔 News**
 
@@ -9,11 +9,11 @@
 
 ## **🚀 Quick Links**
 
-- [About TER](https://www.notion.so/Self-Correct-Machine-Translation-11f9e63afc4d4b60a95b63fb09e2dcf7?pvs=21)
-- [Code Structure](https://www.notion.so/Self-Correct-Machine-Translation-11f9e63afc4d4b60a95b63fb09e2dcf7?pvs=21)
-- [Requirements](https://www.notion.so/Self-Correct-Machine-Translation-11f9e63afc4d4b60a95b63fb09e2dcf7?pvs=21)
-- [Usage](https://www.notion.so/Self-Correct-Machine-Translation-11f9e63afc4d4b60a95b63fb09e2dcf7?pvs=21)
-- [Citation](https://www.notion.so/Self-Correct-Machine-Translation-11f9e63afc4d4b60a95b63fb09e2dcf7?pvs=21)
+- **[About TER](https://www.notion.so/Self-Correct-Machine-Translation-11f9e63afc4d4b60a95b63fb09e2dcf7?pvs=21)**
+- **[Code Structure](https://www.notion.so/Self-Correct-Machine-Translation-11f9e63afc4d4b60a95b63fb09e2dcf7?pvs=21)**
+- **[Requirements](https://www.notion.so/Self-Correct-Machine-Translation-11f9e63afc4d4b60a95b63fb09e2dcf7?pvs=21)**
+- **[Usage](https://www.notion.so/Self-Correct-Machine-Translation-11f9e63afc4d4b60a95b63fb09e2dcf7?pvs=21)**
+- **[Citation](https://www.notion.so/Self-Correct-Machine-Translation-11f9e63afc4d4b60a95b63fb09e2dcf7?pvs=21)**
 
 ## **🤖** About TER
 
