@@ -23,7 +23,7 @@ The **TER** (**Translate**, **Estimate**, and **Refine**) framework is designed 
 2. **Estimate**: Following the initial translation, this module takes over to evaluate the quality of the translation. It provides an assessment that acts as feedback, indicating areas of strength and potential improvement in the translation.
 3. **Refine**: Based on the feedback and assessments provided by the Estimate module, the Refine module performs corrections on the initial translation. It utilizes the insights gained from the previous two modules to enhance the overall quality of the translation.
 
-![framework.png](Self-Correct%20Machine%20Translation%2011f9e63afc4d4b60a95b63fb09e2dcf7/framework.png)
+<img src="./paper/framework.png" alt="framework.png" style="zoom:25%;" />
 
 ## **📚** Code Structure
 
