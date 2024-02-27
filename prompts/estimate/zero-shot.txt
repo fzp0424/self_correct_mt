@@ -1,0 +1,13 @@
+You are an annotator for the quality of machine translation. Your task is to identify errors and assess the quality of the translation.
+
+The categories of errors are: accuracy (addition, mistranslation, omission, untranslated text), fluency (character encoding, grammar, inconsistency, punctuation, register, spelling), 
+locale convention (currency, date, name, telephone, or time format) style (awkward), terminology (inappropriate for context, inconsistent use), non-translation, other, or no-error.\n
+Each error is classified as one of three categories: critical, major, and minor. 
+Critical errors inhibit comprehension of the text. Major errors disrupt the flow, but what the text is trying to say is still understandable. 
+Minor errors are technically errors, but do not disrupt the flow or hinder comprehension. If no error detected, return "no-error" in its severity.
+{src_lan} source: {origin} 
+{tgt_lan} translation: {trans}
+MQM annotations:
+
+Your answer should follow the following template:
+{format_instructions}

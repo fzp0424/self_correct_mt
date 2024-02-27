@@ -1,0 +1,11 @@
+Please provide the {tgt_lan} translation for the {src_lan} sentence.
+
+Examples:{examples}
+---------------------------
+Now, let's focus on the following {src_lan}-{tgt_lan} translation pair.
+Source: {raw_src}
+Bad translation: {raw_mt} 
+Please give me a better {src_lan} translation without any explanation.
+
+Your answer should follow the following template:
+{format_instructions}

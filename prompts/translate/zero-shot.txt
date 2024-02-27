@@ -1,0 +1,7 @@
+Please provide the {tgt_lan} translation for the {src_lan} sentence:
+
+{src_lan} Source: {origin} 
+Target:<<<The {tgt_lan} translation of Source>>>
+
+Your answer should follow the following template:
+{format_instructions}

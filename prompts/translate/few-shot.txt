@@ -1,0 +1,11 @@
+Please provide the {tgt_lan} translation for the {src_lan} sentence:
+
+Example:
+{examples}
+------------------
+Your case:
+Source: {origin}
+Target: <<<{tgt_lan} translation of the Source>>>
+
+Your answer should follow the following template:
+{format_instructions}

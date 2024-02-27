@@ -1,0 +1,138 @@
+[
+    {
+        "en-ja": [
+            "English",
+            "Japanese",
+            "en",
+            "ja"
+        ]
+    },
+    {
+        "ja-en": [
+            "Japanese",
+            "English",
+            "ja",
+            "en"
+        ]
+    },
+    {
+        "fr-de": [
+            "French",
+            "German",
+            "fr",
+            "de"
+        ]
+    },
+    {
+        "de-fr": [
+            "German",
+            "French",
+            "de",
+            "fr"
+        ]
+    },
+    {
+        "de-en": [
+            "German",
+            "English",
+            "de",
+            "en"
+        ]
+    },
+    {
+        "en-de": [
+            "English",
+            "German",
+            "en",
+            "de"
+        ]
+    },
+    {
+        "is-en": [
+            "Icelandic",
+            "English",
+            "is",
+            "en"
+        ]
+    },
+    {
+        "en-is": [
+            "English",
+            "Icelandic",
+            "en",
+            "is"
+        ]
+    },
+    {
+        "en-cs": [
+            "English",
+            "Czech",
+            "en",
+            "cs"
+        ]
+    },
+    {
+        "cs-en": [
+            "Czech",
+            "English",
+            "cs",
+            "en"
+        ]
+    },
+    {
+        "en-ru": [
+            "English",
+            "Russian",
+            "en",
+            "ru"
+        ]
+    },
+    {
+        "ru-en": [
+            "Russian",
+            "English",
+            "ru",
+            "en"
+        ]
+    },
+    {
+        "en-uk": [
+            "English",
+            "Ukrainian",
+            "en",
+            "uk"
+        ]
+    },
+    {
+        "uk-en": [
+            "Ukrainian",
+            "English",
+            "uk",
+            "en"
+        ]
+    },
+    {
+        "en-zh": [
+            "English",
+            "Chinese",
+            "en",
+            "zh"
+        ]
+    },
+    {
+        "zh-en": [
+            "Chinese",
+            "English",
+            "zh",
+            "en"
+        ]
+    },
+    {
+        "he-en": [
+            "Hebrew",
+            "English",
+            "he",
+            "en"
+        ]
+    }
+]

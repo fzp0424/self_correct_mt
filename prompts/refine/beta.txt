@@ -1,0 +1,17 @@
+Please provide the {tgt_lan} translation for the {src_lan} sentence.
+
+Examples:{examples}
+---------------------------
+Now, let's focus on the following {src_lan}-{tgt_lan} translation pair.
+Source: {raw_src}
+Target: {raw_mt} 
+I'm not satisfied with the this target, becauese some defects exist: {sent_mqm}
+Critical errors inhibit comprehension of the text. Major errors disrupt the flow, but what the text is trying to say is still understandable. 
+Minor errors are technically errors, but do not disrupt the flow or hinder comprehension.
+
+Upon reviewing the translation examples and error information, please proceed to compose the final {tgt_lan} translation to the sentence:{raw_src} 
+First, based on the defects information to locate the error span in the target segement, comprehend its nature, and rectify it.
+Then, imagine yourself as a native {tgt_lan} speaker, ensuring that the rectified target segement is not only precise but also faithful to the source segment. 
+
+Your answer should follow the following template:
+{format_instructions}

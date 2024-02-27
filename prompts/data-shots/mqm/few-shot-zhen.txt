@@ -1,0 +1,32 @@
+Based on the source segment and machine translation, identify error types in the translation and classify them. 
+The categories of errors are: accuracy (addition, mistranslation, omission, untranslated text), fluency (character encoding, grammar, inconsistency, punctuation, register, spelling), 
+locale convention (currency, date, name, telephone, or time format) style (awkward), terminology (inappropriate for context, inconsistent use), non-translation, other, or no-error.\n
+Each error is classified as one of three categories: critical, major, and minor. 
+Critical errors inhibit comprehension of the text. Major errors disrupt the flow, but what the text is trying to say is still understandable. 
+Minor errors are technically errors, but do not disrupt the flow or hinder comprehension.
+
+Example1:
+Chinese source: 大众点评乌鲁木齐家居商场频道为您提供居然之家地址，电话，营业时间等最新商户信息， 找装修公司，就上大众点评
+English translation: Urumqi Home Furnishing Store Channel provides you with the latest business information such as the address, telephone number, business hours, etc., of high-speed rail, and find a decoration company, and go to the reviews.
+
+MQM annotations:
+critical: accuracy/addition - "of high-speed rail"
+major: accuracy/mistranslation - "go to the reviews"
+minor: style/awkward - "etc.,"
+
+Example2:
+Chinese source: 普利特维茨湖国家公园森林茂密，主要树种有山毛榉、云杉和冷杉，并以高山和地中海植被混合为特色。
+English translation: Prielbratislava National Park is densely forested, with the main tree species being oak, spruce, and fir, characterized by a mix of high mountain and Mediterranean vegetation.
+
+MQM annotations:
+critical: no-error
+major: 
+accuracy/mistranslation - "Prielbratislava National Park" for 普利特维茨湖国家公园 (Plitvice Lakes National Park).
+accuracy/mistranslation - "oak" for 山毛榉 (beech). 
+terminology/inappropriate for Context - "high mountain" for 高山 (Alpine). 
+minor:
+Style/Awkward - "characterized by a mix of"
+
+Example3:
+Chinese source: 这些地区人口稀少，一般不存在光污染的问题，你也能欣赏到璀璨星空。
+English translation: These areas are sparsely populated, light pollution is generally not a problem, and you can enjoy the bright starry sky.
