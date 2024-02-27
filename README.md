@@ -13,7 +13,7 @@
 - **[Code Structure](#code)**
 - **[Requirements](#req)**
 - **[Usage](#us)**
-- **[Citation](#c)**
+- **[Citation](#cita)**
 
 ## **🤖** About TER<a name="about"></a>
 
@@ -109,7 +109,7 @@ print(f"Need correction: {nc}")
 print(f"MQM Info: {mqm_info}")
 ```
 
-## Citation<a name="cit"></a>
+## Citation<a name="cita"></a>
 
 ```latex
 @misc{feng2024improving,
