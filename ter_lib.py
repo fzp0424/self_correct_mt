@@ -31,32 +31,21 @@ def generate_ans(model, module, prompt, parser):
 
     ans = llm.invoke(input=prompt)
     ans = ans.content
+    ans_dict = parser.parse(ans)
 
     if module == "translate":
-        ans_dict = parser.parse(ans)
-        ans_mt = ans_dict["Target"]
-        # print(f"Translate: {ans_mt}")
-        return ans_mt
+        return ans_dict["Target"]
 
     elif module == "estimate":
-        ans_dict = parser.parse(ans)
-        all_no_error = all(
-            value == "no-error" or value == "" or value == "null" or value == None
+        is_correction_needed = not all(
+            value == "no-error" or value == "" or value == "null" or value is None
             for value in ans_dict.values()
         )
-        if all_no_error:
-            # print("No need for correction")
-            nc = 0
-        else:
-            nc = 1
-        # print(f"Estimate: {ans}")
-        return ans, nc
+
+        return ans, is_correction_needed
 
     elif module == "refine":
-        ans_dict = parser.parse(ans)
-        ans_mt = ans_dict["Final Target"]
-        # print(f"Refine: {ans_mt}")
-        return ans_mt
+        return ans_dict["Final Target"]
 
 
 class TER:

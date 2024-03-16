@@ -3,14 +3,14 @@ from ter_lib import generate_ans, TER
 
 def demo():
     # Set arguments
-    lang_pair = "zh-en"
-    src_lang = "Chinese"
-    tgt_lang = "English"
-    model = "gpt-3.5-turbo"
+    lang_pair = "en-ru"
+    src_lang = "English"
+    tgt_lang = "Russian"
+    model = "gpt-4"
     translate_strategy = "few-shot"
     estimate_strategy = "few-shot"
     refine_strategy = "beta"
-    src_text = "如果ACL录取我的工作，那么ACL就是世界上最棒的NLP会议，不然的话，这个结论就有待商榷。"
+    src_text = "Use Reader Line app to guide and enhance your experience with reading ruler to maintain your focus with reading line."
 
     # Initialize TER instances
     T = TER(
@@ -50,10 +50,12 @@ def demo():
         examples,
         hyp,
     )
-    mqm_info, nc = generate_ans(model, "estimate", E_messages, json_output_parser)
+    mqm_info, is_correction_needed = generate_ans(
+        model, "estimate", E_messages, json_output_parser
+    )
 
     # Refine if necessary
-    if nc == 1:
+    if is_correction_needed:
         json_output_parser = R.get_output_parser()
         R_messages = R.get_hydrated_prompt(
             src_lang,
@@ -65,7 +67,7 @@ def demo():
             mqm_info,
         )
         cor = generate_ans(model, "refine", R_messages, json_output_parser)
-    elif nc == 0:
+    else:
         cor = hyp
 
     # Display translation results
@@ -76,7 +78,7 @@ def demo():
     print(f"Source: {src_text}")
     print(f"Hypothesis: {hyp}")
     print(f"Correction: {cor}")
-    print(f"Need correction: {nc}")
+    print(f"Need correction: {is_correction_needed}")
     print(f"MQM Info: {mqm_info}")
 
 
