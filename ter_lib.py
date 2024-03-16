@@ -68,9 +68,9 @@ class TER:
         self.module = module
         self.strategy = strategy
 
-        self.hydrate_template(prompt_path)
+        self.load_prompt_template(prompt_path)
 
-    def hydrate_template(self, prompt_path):
+    def load_prompt_template(self, prompt_path):
         template_path = os.path.join(prompt_path, f"{self.module}/{self.strategy}.txt")
 
         with open(
@@ -130,7 +130,7 @@ class TER:
 
         return None
 
-    def fill_prompt(
+    def get_hydrated_prompt(
         self,
         src_lan,
         tgt_lan,
@@ -141,26 +141,25 @@ class TER:
         mqm_info=None,
     ):
         if self.module == "translate":
-            write_prompt = self.template
-            prompt = write_prompt.format(
+            return self.template.format(
                 src_lan=src_lan,
                 tgt_lan=tgt_lan,
                 examples=examples,
                 origin=src.strip(),
                 format_instructions=json_output_instructions,
             )
-        elif self.module == "estimate":
-            write_prompt = self.template
-            prompt = write_prompt.format(
+
+        if self.module == "estimate":
+            return self.template.format(
                 src_lan=src_lan,
                 tgt_lan=tgt_lan,
                 origin=src.strip(),
                 trans=hyp,
                 format_instructions=json_output_instructions,
             )
-        elif self.module == "refine":
-            write_prompt = self.template
-            prompt = write_prompt.format(
+
+        if self.module == "refine":
+            return self.template.format(
                 src_lan=src_lan,
                 tgt_lan=tgt_lan,
                 examples=examples,
@@ -169,4 +168,5 @@ class TER:
                 sent_mqm=mqm_info,
                 format_instructions=json_output_instructions,
             )
-        return prompt
+
+        return ""

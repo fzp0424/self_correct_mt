@@ -31,7 +31,7 @@ def demo():
     json_output_parser = T.get_output_parser()
 
     # Translate
-    T_messages = T.fill_prompt(
+    T_messages = T.get_hydrated_prompt(
         src_lang,
         tgt_lang,
         src_text,
@@ -42,7 +42,7 @@ def demo():
 
     # Estimate
     json_output_parser = E.get_output_parser()
-    E_messages = E.fill_prompt(
+    E_messages = E.get_hydrated_prompt(
         src_lang,
         tgt_lang,
         src_text,
@@ -55,7 +55,7 @@ def demo():
     # Refine if necessary
     if nc == 1:
         json_output_parser = R.get_output_parser()
-        R_messages = R.fill_prompt(
+        R_messages = R.get_hydrated_prompt(
             src_lang,
             tgt_lang,
             src_text,
