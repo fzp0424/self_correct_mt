@@ -1,5 +1,5 @@
 openai==1.6.1
-langchain-openai==0.0.8
-langchain_google_genai==0.0.5
-langchain==0.0.352
-python-dotenv==1.0.0
+langchain-openai
+langchain_google_genai
+langchain
+python-dotenv

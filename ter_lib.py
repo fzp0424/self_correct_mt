@@ -1,12 +1,10 @@
 import json
 import os
 import openai
-import argparse
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_openai.chat_models import ChatOpenAI
-from langchain.chains import ConversationChain
 from langchain.output_parsers import ResponseSchema, StructuredOutputParser
-from langchain.prompts import PromptTemplate, ChatPromptTemplate
+from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv, find_dotenv
 
 # Load environment variables
@@ -15,33 +13,37 @@ openai.api_key = os.environ["OPENAI_API_KEY"]
 
 # Define model endpoints
 MODEL_ENDPOINTS = {
-    'openai': ['gpt-4', 'gpt-4-1106-preview', 'gpt-3.5-turbo-0613', 'gpt-3.5-turbo'],
-    'google': ['gemini-pro']
+    "openai": ["gpt-4", "gpt-4-1106-preview", "gpt-3.5-turbo-0613", "gpt-3.5-turbo"],
+    "google": ["gemini-pro"],
 }
 
 
 def read_json(path):
-    with open(path, 'r', encoding='utf-8') as f:
+    with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
 
+
 def generate_ans(model, module, prompt, parser):
-    if model in MODEL_ENDPOINTS['openai']:
+    if model in MODEL_ENDPOINTS["openai"]:
         llm = ChatOpenAI(model_name=model, verbose=True)
-    elif model in MODEL_ENDPOINTS['google']:
+    elif model in MODEL_ENDPOINTS["google"]:
         llm = ChatGoogleGenerativeAI(model=model, verbose=True)
 
     ans = llm.invoke(input=prompt)
     ans = ans.content
 
-    if module == 'translate':
+    if module == "translate":
         ans_dict = parser.parse(ans)
-        ans_mt = ans_dict['Target']
+        ans_mt = ans_dict["Target"]
         # print(f"Translate: {ans_mt}")
         return ans_mt
 
-    elif module == 'estimate':
+    elif module == "estimate":
         ans_dict = parser.parse(ans)
-        all_no_error = all(value == "no-error" or value == '' or value == "null" or value == None for value in ans_dict.values())
+        all_no_error = all(
+            value == "no-error" or value == "" or value == "null" or value == None
+            for value in ans_dict.values()
+        )
         if all_no_error:
             # print("No need for correction")
             nc = 0
@@ -50,78 +52,121 @@ def generate_ans(model, module, prompt, parser):
         # print(f"Estimate: {ans}")
         return ans, nc
 
-    elif module == 'refine':
+    elif module == "refine":
         ans_dict = parser.parse(ans)
-        ans_mt = ans_dict['Final Target']
+        ans_mt = ans_dict["Final Target"]
         # print(f"Refine: {ans_mt}")
         return ans_mt
 
+
 class TER:
-    def __init__(self, lang_pair, model, module, strategy, prompt_path='./prompts/'):
+    template: str
+
+    def __init__(self, lang_pair, model, module, strategy, prompt_path="./prompts/"):
         self.lang_pair = lang_pair
         self.model = model
         self.module = module
         self.strategy = strategy
-        with open(os.path.join(prompt_path, f'{self.module}/{self.strategy}.txt'), 'r', encoding='utf-8') as f:
-            raw_template = f.read()
-        self.template = self.form_template(raw_template)
 
-    def form_template(self, raw_template):
-        temp = PromptTemplate.from_template(template=raw_template)
-        return temp
+        self.hydrate_template(prompt_path)
+
+    def hydrate_template(self, prompt_path):
+        template_path = os.path.join(prompt_path, f"{self.module}/{self.strategy}.txt")
+
+        with open(
+            template_path,
+            "r",
+            encoding="utf-8",
+        ) as f:
+            raw_template = f.read()
+
+        self.template = PromptTemplate.from_template(template=raw_template)
 
     def load_examples(self):
+        if self.strategy != "few-shot":
+            return ""
+
         try:
-            if self.strategy == 'few-shot':
-                qr_fewshot_path = f"prompts/data-shots/mt/shots.{self.lang_pair}.json"
-                with open(qr_fewshot_path, 'r', encoding='utf-8') as json_file:
-                    few = json.load(json_file)
+            qr_fewshot_path = f"prompts/data-shots/mt/shots.{self.lang_pair}.json"
+            with open(qr_fewshot_path, "r", encoding="utf-8") as json_file:
+                few = json.load(json_file)
 
-                cases_srcs = [few[i]['source'] for i in range(len(few))]
-                cases_tgts = [few[i]['target'] for i in range(len(few))]
-                origin_template = '''Source: {src_top} Target: {tgt_ans}'''
+            cases_srcs = [few[i]["source"] for i in range(len(few))]
+            cases_tgts = [few[i]["target"] for i in range(len(few))]
+            origin_template = """Source: {src_top} Target: {tgt_ans}"""
 
-                cases_formatted = '\n'.join([
-                    origin_template.format(src_top=cases_srcs[i], tgt_ans=cases_tgts[i]) for i in range(len(cases_srcs))])
+            return "\n".join(
+                [
+                    origin_template.format(src_top=cases_srcs[i], tgt_ans=cases_tgts[i])
+                    for i in range(len(cases_srcs))
+                ]
+            )
+        finally:
+            return ""
 
-            elif self.strategy == 'zero-shot':
-                cases_formatted = ''
-            else:
-                cases_formatted = ''
-        except: 
-            cases_formatted = ''
+    def get_output_parser(self):
+        if self.module == "translate":
+            ans_schema = ResponseSchema(
+                name="Target",
+                description="The final translation. Please use escape characters for the quotation marks in the sentence.",
+            )
 
-        return cases_formatted
+            return StructuredOutputParser.from_response_schemas([ans_schema])
 
-    def set_parser(self):
-        if self.module == 'translate':
-            ans_schema = ResponseSchema(name="Target", description="The final translation. Please use escape characters for the quotation marks in the sentence.")
-            json_parser = StructuredOutputParser.from_response_schemas([ans_schema])
-            json_output_instructions = json_parser.get_format_instructions()
-        elif self.module == 'estimate':
+        if self.module == "estimate":
             cr = ResponseSchema(name="critical", description="critical errors")
             mj = ResponseSchema(name="major", description="major errors")
             mn = ResponseSchema(name="minor", description="minor errors")
 
-            ans_schema = [cr, mj, mn]
-            json_parser = StructuredOutputParser.from_response_schemas(ans_schema)
-            json_output_instructions = json_parser.get_format_instructions()
-        elif self.module == 'refine':
-            ans_schema = ResponseSchema(name="Final Target", description="The final translation. Please use escape characters for the quotation marks in the sentence.")
-            json_parser = StructuredOutputParser.from_response_schemas([ans_schema])
-            json_output_instructions = json_parser.get_format_instructions()
+            return StructuredOutputParser.from_response_schemas([cr, mj, mn])
 
-        return json_parser, json_output_instructions
+        if self.module == "refine":
+            ans_schema = ResponseSchema(
+                name="Final Target",
+                description="The final translation. Please use escape characters for the quotation marks in the sentence.",
+            )
 
-    def fill_prompt(self, src_lan, tgt_lan, src, json_output_instructions, examples=None, hyp=None, mqm_info=None):
-        if self.module == 'translate':
+            return StructuredOutputParser.from_response_schemas([ans_schema])
+
+        return None
+
+    def fill_prompt(
+        self,
+        src_lan,
+        tgt_lan,
+        src,
+        json_output_instructions,
+        examples=None,
+        hyp=None,
+        mqm_info=None,
+    ):
+        if self.module == "translate":
             write_prompt = self.template
-            prompt = write_prompt.format(src_lan=src_lan, tgt_lan=tgt_lan, examples=examples, origin=src.strip(), format_instructions=json_output_instructions)
-        elif self.module == 'estimate':
+            prompt = write_prompt.format(
+                src_lan=src_lan,
+                tgt_lan=tgt_lan,
+                examples=examples,
+                origin=src.strip(),
+                format_instructions=json_output_instructions,
+            )
+        elif self.module == "estimate":
             write_prompt = self.template
-            prompt = write_prompt.format(src_lan=src_lan, tgt_lan=tgt_lan, origin=src.strip(), trans=hyp, format_instructions=json_output_instructions)
-        elif self.module == 'refine':
+            prompt = write_prompt.format(
+                src_lan=src_lan,
+                tgt_lan=tgt_lan,
+                origin=src.strip(),
+                trans=hyp,
+                format_instructions=json_output_instructions,
+            )
+        elif self.module == "refine":
             write_prompt = self.template
-            prompt = write_prompt.format(src_lan=src_lan, tgt_lan=tgt_lan, examples=examples, raw_src=src.strip(), raw_mt=hyp, sent_mqm=mqm_info, format_instructions=json_output_instructions)
+            prompt = write_prompt.format(
+                src_lan=src_lan,
+                tgt_lan=tgt_lan,
+                examples=examples,
+                raw_src=src.strip(),
+                raw_mt=hyp,
+                sent_mqm=mqm_info,
+                format_instructions=json_output_instructions,
+            )
         return prompt
-
