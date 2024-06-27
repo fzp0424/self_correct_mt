@@ -1,8 +1,8 @@
 import json
 import os
 import openai
-import argparse
 from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_community.chat_models import ChatZhipuAI
 from langchain_openai.chat_models import ChatOpenAI
 from langchain.chains import ConversationChain
 from langchain.output_parsers import ResponseSchema, StructuredOutputParser
@@ -12,11 +12,12 @@ from dotenv import load_dotenv, find_dotenv
 # Load environment variables
 load_dotenv(find_dotenv())
 openai.api_key = os.environ["OPENAI_API_KEY"]
-
+zhipu_api_key = os.environ["ZHIPUAI_API_KEY"]
 # Define model endpoints
 MODEL_ENDPOINTS = {
-    'openai': ['gpt-4', 'gpt-4-1106-preview', 'gpt-3.5-turbo-0613', 'gpt-3.5-turbo'],
-    'google': ['gemini-pro']
+    'openai': ['gpt-4','gpt-4o', 'gpt-4-1106-preview', 'gpt-3.5-turbo-0613', 'gpt-3.5-turbo'],
+    'google': ['gemini-pro'],
+    'zhipu' : ['glm-4-0520', 'glm-4-air']
 }
 
 
@@ -25,13 +26,19 @@ def read_json(path):
         return json.load(f)
 
 def generate_ans(model, module, prompt, parser):
+    
     if model in MODEL_ENDPOINTS['openai']:
         llm = ChatOpenAI(model_name=model, verbose=True)
     elif model in MODEL_ENDPOINTS['google']:
         llm = ChatGoogleGenerativeAI(model=model, verbose=True)
+    elif model in MODEL_ENDPOINTS['zhipu']:
+        llm = ChatZhipuAI(model=model, api_key = zhipu_api_key,verbose=True)
+    else:
+        raise AssertionError("please add your model in ter_lib.py")
 
     ans = llm.invoke(input=prompt)
     ans = ans.content
+    print(prompt)
 
     if module == 'translate':
         ans_dict = parser.parse(ans)
@@ -56,7 +63,7 @@ def generate_ans(model, module, prompt, parser):
         # print(f"Refine: {ans_mt}")
         return ans_mt
 
-class TER:
+class TEaR:
     def __init__(self, lang_pair, model, module, strategy, prompt_path='./prompts/'):
         self.lang_pair = lang_pair
         self.model = model

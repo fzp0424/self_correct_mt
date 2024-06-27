@@ -1,4 +1,4 @@
-from ter_lib import generate_ans, TER
+from ter_lib import generate_ans, TEaR
 
 def demo():
     # Set arguments
@@ -9,12 +9,12 @@ def demo():
     translate_strategy = "few-shot"
     estimate_strategy = "few-shot"
     refine_strategy = "beta"
-    src_text = "如果ACL录取我的工作，那么ACL就是世界上最棒的NLP会议，不然的话，这个结论就有待商榷。"
+    src_text = "如果EMNLP录取我的工作，那么EMNLP就是世界上最棒的NLP会议！"
 
-    # Initialize TER instances
-    T = TER(lang_pair=lang_pair, model=model, module='translate', strategy=translate_strategy)
-    E = TER(lang_pair=lang_pair, model=model, module='estimate', strategy=estimate_strategy)
-    R = TER(lang_pair=lang_pair, model=model, module='refine', strategy=refine_strategy)
+    # Initialize TEaR instances
+    T = TEaR(lang_pair=lang_pair, model=model, module='translate', strategy=translate_strategy)
+    E = TEaR(lang_pair=lang_pair, model=model, module='estimate', strategy=estimate_strategy)
+    R = TEaR(lang_pair=lang_pair, model=model, module='refine', strategy=refine_strategy)
 
     # Load examples and set up the parser
     examples = T.load_examples() # if few-shot translate is not supported, automatically use zero-shot translate
@@ -38,7 +38,7 @@ def demo():
         cor = hyp
 
     # Display translation results
-    print(f"----------------(╹ڡ╹ )-----------Result---------o(*￣▽￣*)ブ-----------------")
+    print(f"----------------(╹ڡ╹ )----------TEaR---------o(*￣▽￣*)ブ-----------------")
     print(f"Model: {model}")
     print(f"Source: {src_text}")
     print(f"Hypothesis: {hyp}")
