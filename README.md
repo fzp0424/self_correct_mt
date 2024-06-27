@@ -1,13 +1,11 @@
-# TEaR Readme
-
-# Self-Refine Machine Translation Agent - TEaR
+# TEaR - Self-Refine Machine Translation
 
 ![TEaR.png](asset/TEaR-github.png)
 
 ## **🔔 News**
 
-- **[06/27/2024] We have updated our code, paper, and dependencies.  Add support to the glm-4-0520 and glm-4-air (from Zhipu AI). Check the latest version of our TEaR paper on arXiv.**
-- **[06/22/2024] Welcome to try our newest learning-based translation-refinement tools - Ladder** https://github.com/fzp0424/Ladder**, paper link:** [[2406.15741] Ladder: A Model-Agnostic Framework Boosting LLM-based Machine Translation to the Next Level (arxiv.org)](https://arxiv.org/abs/2406.15741)
+- **[06/27/2024] Update our code, paper, and dependencies. Add support to glm-4-0520 and glm-4-air. Check the latest version of our TEaR paper on arXiv.**
+- **[06/22/2024] Welcome to try our newest learning-based translation-refinement tools - Ladder https://github.com/fzp0424/Ladder, paper link:** [[2406.15741] Ladder: A Model-Agnostic Framework Boosting LLM-based Machine Translation to the Next Level (arxiv.org)](https://arxiv.org/abs/2406.15741)
 - **[02/28/2024] Our Code for TEaR is open-sourced!**
 - **[02/27/2024] Our API-based Self-Refine framework TEaR is released on arXiv:** [[2402.16379] Improving LLM-based Machine Translation with Systematic Self-Correction (arxiv.org)](https://arxiv.org/abs/2402.16379)
 
@@ -52,6 +50,8 @@ zhipuai
 ```
 
 ## **💁** Usage<a name="us"></a>
+
+Please fill in your api_key in the `.env` first.
 
 ### a) File in, File out
 
